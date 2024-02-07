@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:employee_attendance/constants/constants.dart';
 import 'package:employee_attendance/models/attendance_model.dart';
 import 'package:employee_attendance/services/location_service.dart';
@@ -47,7 +49,7 @@ class AttendanceService extends ChangeNotifier {
   Future markAttendance(BuildContext context) async {
     Map? getLocation =
         await LocationService().initializeAndGetLocation(context);
-
+    log('getLocation: $getLocation', name: 'AttendanceService');
     if (getLocation != null) {
       if (attendanceModel?.checkIn == null) {
         await _supabase.from(Constants.attendanceTable).insert([

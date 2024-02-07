@@ -1,45 +1,32 @@
-import 'package:employee_attendance/utils/utils.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LocationService {
-  Location location = Location();
-  late LocationData _locData;
-
+  final geolocator = Geolocator();
+  late Position _position;
   Future<Map<String, double?>?> initializeAndGetLocation(
       BuildContext context) async {
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
-
-    // First check whether location is enabled or not in the device
-    serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (context.mounted) {
-        if (!serviceEnabled) {
-          Utils.showSnackBar("Please Enable Location Service", context);
-          return null;
-        }
-      }
+    final isPermissionEnabled = await Geolocator.isLocationServiceEnabled();
+    final permissionStatus = await Geolocator.checkPermission();
+    if (permissionStatus == LocationPermission.deniedForever) {
+      await Geolocator.openAppSettings();
+      _position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
     }
-    // If service is enabled then ask permission for location from user
-    permissionGranted = await location.hasPermission();
-
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        if (context.mounted) {
-          Utils.showSnackBar("Please Allow Location Access", context);
-          return null;
-        }
-      }
+    if (isPermissionEnabled) {
+      _position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+    } else {
+      await Geolocator.requestPermission();
+      _position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
     }
-
-    // After permissison is granted then return the cordinates
-    _locData = await location.getLocation();
+    log('Location: $_position', name: 'LocationService');
     return {
-      'latitude': _locData.latitude,
-      'longitude': _locData.longitude,
+      'latitude': _position.latitude,
+      'longitude': _position.longitude,
     };
   }
 }
