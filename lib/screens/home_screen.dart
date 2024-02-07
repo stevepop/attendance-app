@@ -60,8 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Center(
                     child: FaIcon(
                       navigationIcons[i],
-                      color:
-                          i == currentIndex ? Colors.redAccent : Colors.black54,
+                      color: i == currentIndex
+                          ? Colors.blueAccent
+                          : Colors.black54,
                       size: i == currentIndex ? 30 : 26,
                     ),
                   ),

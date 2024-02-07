@@ -168,7 +168,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                   fontSize: 18,
                 ),
                 outerColor: Colors.white,
-                innerColor: Colors.redAccent,
+                innerColor: Colors.blueAccent,
                 key: key,
                 onSubmit: () async {
                   await attendanceService.markAttendance(context);

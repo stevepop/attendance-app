@@ -34,11 +34,18 @@ class _LoginScreenState extends State<LoginScreen> {
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.qr_code_scanner, color: Colors.white, size: 80),
                 SizedBox(height: 20),
-                Text("ICGEA",
+                Text("Intrinsic Care Group",
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30)),
+                SizedBox(height: 10),
+                Text("Staff Attendance",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
               ],
             ),
           ),

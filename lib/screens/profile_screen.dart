@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: 100,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Colors.redAccent,
+                          color: Colors.blueAccent,
                         ),
                         child: const Icon(
                           Icons.person,
